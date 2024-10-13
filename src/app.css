@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "Lexend-Regular";
+    src: url("/Lexend-Regular.ttf") format("truetype");
+}
+
+:root {
+    --bg-color: #0e0e0e;
+    --text-color: #ccc;
+}
+
+body {
+    font-family: "Lexend-Regular", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
