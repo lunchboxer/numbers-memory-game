@@ -1,15 +1,72 @@
 @font-face {
-    font-family: "Lexend-Regular";
-    src: url("/Lexend-Regular.ttf") format("truetype");
+    font-family: 'Lexend Regular';
+    src: url(/Lexend-Regular.ttf) format('truetype');
 }
 
 :root {
-    --bg-color: #0e0e0e;
-    --text-color: #ccc;
+    --bg-color: #f0f0f0;
+    --text-color: #111;
+    --primary-color: #7e57c2;
+    --button-text: white;
+    --button-hover: #4527a0;
+    --player1-color: #ff1744;
+    --player2-color: #2979ff;
+    --border-color: #aaa;
+    --square-bg: white;
+    --square-hover: #e0e0e0;
+    --square-selected-bg: #f6f6f6;
+}
+
+.dark-mode {
+    --bg-color: #333;
+    --text-color: #eee;
+    --primary-color: #b388ff;
+    --button-text: #111;
+    --button-hover: #4527a0;
+    --player1-color: #ff1744;
+    --player2-color: #2979ff;
+    --border-color: #777;
+    --square-bg: #222;
+    --square-hover: #444;
+    --square-selected-bg: #000;
+}
+
+
+@media (prefers-color-scheme: dark) {
+    body {
+        --bg-color: #333;
+        --text-color: #eee;
+        --primary-color: #b388ff;
+        --button-text: #111;
+        --button-hover: #4527a0;
+        --player1-color: #ff1744;
+        --player2-color: #2979ff;
+        --border-color: #777;
+        --square-bg: #222;
+        --square-hover: #444;
+        --square-selected-bg: #000;
+    }
+
+    body.light-theme {
+        --bg-color: #f0f0f0;
+        --text-color: #111;
+        --primary-color: #7e57c2;
+        --button-text: white;
+        --button-hover: #4527a0;
+        --player1-color: #ff1744;
+        --player2-color: #2979ff;
+        --border-color: #aaa;
+        --square-bg: white;
+        --square-hover: #e0e0e0;
+        --square-selected-bg: #f6f6f6;
+    }
 }
 
 body {
-    font-family: "Lexend-Regular", sans-serif;
+    font-family: 'Lexend Regular', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
+    padding: 0;
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s;
 }

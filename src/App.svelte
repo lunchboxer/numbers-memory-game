@@ -145,8 +145,15 @@
 <main>
     <div class="game-info">
         <h1 class="title">Numbers Memory Game</h1>
-        <p>Player 1: {scores[0]} | Player 2: {scores[1]}</p>
-        <p>Current Player: {currentPlayer + 1}</p>
+        <p>
+            <span class="player1" class:currentPlayer={currentPlayer === 0}>
+                Player 1: {scores[0]}
+            </span>
+
+            <span class="player2" class:currentPlayer={currentPlayer === 1}>
+                Player 2: {scores[1]}
+            </span>
+        </p>
     </div>
     {#if !gameStarted}
         <button class="start-button" on:click={startGame}>Start Game</button>
@@ -184,7 +191,12 @@
                 {#if scores[0] === scores[1]}
                     <p>It's a tie!</p>
                 {:else}
-                    <p>Winner: Player {scores[0] > scores[1] ? 1 : 2}</p>
+                    <p
+                        class:player1={scores[0] > scores[1]}
+                        class:player2={scores[1] > scores[0]}
+                    >
+                        Winner: Player {scores[0] > scores[1] ? 1 : 2}
+                    </p>
                 {/if}
                 <button class="play-again-button" on:click={startGame}>
                     Play Again
@@ -205,7 +217,15 @@
         padding: 0 0.5rem;
         margin: 0 auto;
         position: relative;
-        min-height: calc(100vh - 3.8rem);
+        min-height: calc(100vh - 4.5rem);
+    }
+    .player1 {
+        background-color: var(--player1-color);
+        padding: 0.5rem 1rem;
+    }
+    .player2 {
+        background-color: var(--player2-color);
+        padding: 0.5rem 1rem;
     }
 
     .game-info {
@@ -226,22 +246,22 @@
     }
 
     .grid.game-over {
-        opacity: 0.5;
+        opacity: 0.2;
         pointer-events: none;
         transition: opacity 0.3s;
     }
     .title {
-        color: #6200ea;
+        color: var(--primary-color);
     }
 
     .square {
         aspect-ratio: 1;
         font-size: clamp(16px, 3vw, 28px);
         font-family: inherit;
-        border: 1px solid #333;
-        background-color: var(--bg-color);
+        border: 1px solid var(--border-color);
+        background-color: var(--square-bg);
         border-radius: 5px;
-        color: var(--bg-color);
+        color: var(--square-bg);
         cursor: pointer;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         transition: opacity 0.5s;
@@ -260,13 +280,16 @@
         }
     }
 
-    .square:hover:not(:disabled) {
-        border: 2px solid #fff;
+    .square:hover:not(:disabled, .selected) {
+        border: 2px solid var(--border-color);
+        background: var(--square-hover);
+        color: var(--square-hover);
     }
 
     .square.selected {
-        background-color: #f6f6f6;
-        border: 2px solid #6200ea;
+        background-color: var(--square-selected-bg);
+        border: 2px solid var(--border-color);
+        color: var(--text-color);
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     }
 
@@ -278,11 +301,11 @@
     }
 
     .square.player1 {
-        background-color: #ffcccb;
+        background-color: var(--player1-color);
     }
 
     .square.player2 {
-        background-color: #add8e6;
+        background-color: var(--player2-color);
     }
 
     .game-over-content {
@@ -291,10 +314,11 @@
         transform: translateY(-50%);
         background-color: var(--bg-color);
         padding: 20px;
-        border: 1px solid #ccc;
+        border: 1px solid var(--border-color);
         border-radius: 10px;
         text-align: center;
         z-index: 10;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
     .game-over-content h3 {
         margin: 2rem 0 1rem;
@@ -302,12 +326,16 @@
     .game-over-content h2 {
         margin: 1rem 0 2rem;
     }
+    .currentPlayer {
+        font-size: 1.6rem;
+        padding: 0.5rem 1.5rem;
+    }
 
     .flashed-score {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        color: #6200ea;
+        color: var(--primary-color);
         font-size: 2rem;
     }
 
@@ -316,8 +344,8 @@
         font-size: 1rem;
         padding: 1rem 2rem;
         margin: 1rem;
-        background-color: #6200ea;
-        color: white;
+        background-color: var(--primary-color);
+        color: var(--button-text);
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -326,7 +354,6 @@
 
     .start-button:hover,
     .play-again-button:hover {
-        background-color: #b388ff;
+        background-color: var(--button-hover);
     }
 </style>
-
