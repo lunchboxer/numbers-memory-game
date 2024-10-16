@@ -19,7 +19,7 @@
     let wrongSound = new Audio("wrong.mp3");
     let winSound = new Audio("win.mp3");
 
-    const numbers = [
+    const numbersEN = [
         { number: 1, word: "one" },
         { number: 2, word: "two" },
         { number: 3, word: "three" },
@@ -31,6 +31,26 @@
         { number: 9, word: "nine" },
         { number: 10, word: "ten" },
     ];
+    const numbersZH = [
+        { number: 1, word: "一" },
+        { number: 2, word: "二" },
+        { number: 3, word: "三" },
+        { number: 4, word: "四" },
+        { number: 5, word: "五" },
+        { number: 6, word: "六" },
+        { number: 7, word: "七" },
+        { number: 8, word: "八" },
+        { number: 9, word: "九" },
+        { number: 10, word: "十" },
+    ];
+
+    let language = "en";
+    let numbers = language === "en" ? numbersEN : numbersZH;
+
+    function swapLanguage() {
+        language = language === "en" ? "zh" : "en";
+        numbers = language === "en" ? numbersEN : numbersZH;
+    }
 
     function initializeGrid() {
         const selectedNumbers = numbers
@@ -146,17 +166,30 @@
     <div class="game-info">
         <h1 class="title">Numbers Memory Game</h1>
         <p>
+            {#if language === "en"}
+                Match the arabic numbers with their corresponding words in
+                English.
+            {:else}
+                将阿拉伯数字与其相应的汉字匹配起来.
+            {/if}
+        </p>
+
+        <p>
             <span class="player1" class:currentPlayer={currentPlayer === 0}>
-                Player 1: {scores[0]}
+                {language === "en" ? "Player 1" : "玩家一"}: {scores[0]}
             </span>
 
             <span class="player2" class:currentPlayer={currentPlayer === 1}>
-                Player 2: {scores[1]}
+                {language === "en" ? "Player 2" : "玩家二"}: {scores[1]}
             </span>
         </p>
     </div>
     {#if !gameStarted}
-        <button class="start-button" on:click={startGame}>Start Game</button>
+        <div>
+            <button class="start-button" on:click={startGame}>
+                {language === "en" ? "Start Game" : "开始游戏"}
+            </button>
+        </div>
     {:else}
         <div class="grid" class:game-over={gameOver}>
             {#each grid as square, i}
@@ -205,7 +238,7 @@
         {/if}
     {/if}
 </main>
-<Footer />
+<Footer on:language-change={swapLanguage} />
 
 <style>
     main {

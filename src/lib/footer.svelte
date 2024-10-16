@@ -1,6 +1,8 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import MoonIcon from "./moon-icon.svelte";
     import SunIcon from "./sun-icon.svelte";
+    import LanguageIcon from "./language-icon.svelte";
 
     let prefersDark = window.matchMedia("(prefers-color-scheme: dark)"); // boolean
     let darkMode = prefersDark.matches;
@@ -13,17 +15,28 @@
             document.body.classList.toggle("dark-mode");
         }
     }
+
+    const dispatch = createEventDispatcher();
+
+    function handleLanguageChange() {
+        dispatch("language-change");
+    }
 </script>
 
 <footer>
     <p>made with 💖 by james | <span class="icp">湘ICP备20004695号-1</span></p>
-    <button class="clear-button" on:click={toggleDarkMode}>
-        {#if darkMode}
-            <MoonIcon />
-        {:else}
-            <SunIcon />
-        {/if}
-    </button>
+    <div class="button-group">
+        <button class="clear-button" on:click={toggleDarkMode}>
+            {#if darkMode}
+                <MoonIcon />
+            {:else}
+                <SunIcon />
+            {/if}
+        </button>
+        <button class="clear-button" on:click={handleLanguageChange}>
+            <LanguageIcon />
+        </button>
+    </div>
 </footer>
 
 <style>
@@ -49,5 +62,9 @@
         color: var(--text-color);
         border: none;
         outline: none;
+        cursor: pointer;
+    }
+    .button-group button {
+        margin: 0 0.5rem;
     }
 </style>
